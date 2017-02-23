@@ -23,6 +23,8 @@ Route::post('user/validateform', 'User@validateform');
 Route::get('user/my_account', 'User@my_account');
 Route::get('user/login', 'User@login');
 Route::post('user/validateform', 'User@validateform');
-
 Route::get('user/login_validate_form', 'User@login_validate_form');
 Route::post('user/login_validate_form', 'User@login_validate_form');
+Route::get('user/logout', 'User@logout');
+Route::get('user/image_upload', 'User@image_upload');
+Route::post('user/image_upload', 'User@image_upload');
