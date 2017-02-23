@@ -7,6 +7,7 @@
         
     </head>
     <body>
+        <img src="{{asset('uploads/thumbnail/').'/'.$user->photo}}">
         <div class="container">
             <div class="content">
                 <span style="text-align: right; float: right;"><a href="<?php echo URL::to('/user/logout');?>">Logout</a></span>
@@ -26,13 +27,7 @@
                         </td>
                     </tr>
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    <tr>
+                     <tr>
                         <td>&nbsp;</td>
                         <td><input type="submit" name="submit" value="Upload"></td>
                     </tr>

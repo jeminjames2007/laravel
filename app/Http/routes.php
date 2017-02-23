@@ -28,3 +28,4 @@ Route::post('user/login_validate_form', 'User@login_validate_form');
 Route::get('user/logout', 'User@logout');
 Route::get('user/image_upload', 'User@image_upload');
 Route::post('user/image_upload', 'User@image_upload');
+Route::get('/image', 'User@logout');

@@ -13,6 +13,7 @@ Use Session;
 use Hash;
 use Image;
 
+
 class User extends Controller {
 
     public function index() {
@@ -93,11 +94,15 @@ class User extends Controller {
     }
 
     public function my_account() {
+
         if (!Session::has('USER_ID')) {
             Session::flash('message', 'You must login to access this page');
             return Redirect::to('/user/login');
         }
-        return view('my_account');
+        $condition = array('id' => Session::get('USER_ID'));
+        $user_data = DB::table('user')->where($condition)->get();
+        $data['user'] = end($user_data);
+        return view('my_account', $data);
     }
 
     public function image_upload(Request $request) {
@@ -115,10 +120,12 @@ class User extends Controller {
             $image = Input::file('photo');
             $rand = rand(000000, 99999999);
             $filename = time() . '_' . $rand . '.' . $image->getClientOriginalExtension();
-            $path = base_path() . '/uploads/' . $filename;
-            $path1 = base_path() . '/uploads/thumbnail/' . $filename;
+            $path = public_path() . '/uploads/' . $filename;
+            $path1 = public_path() . '/uploads/thumbnail/' . $filename;
             Image::make($image->getRealPath())->save($path);
             Image::make($image->getRealPath())->resize(200, 200)->save($path1);
+            DB::table('user')->where('id', Session::get('USER_ID'))
+                    ->update(array('photo' => $filename));
             Session::flash('message', 'Image has been uploaded');
             return Redirect::to('/user/my_account');
         }
