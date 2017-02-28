@@ -13,6 +13,7 @@ Use Session;
 use Hash;
 use Image;
 
+use App\Http\Middleware\VerifyCsrfToken;
 
 class User extends Controller {
 
@@ -49,8 +50,8 @@ class User extends Controller {
         if ($validator->fails()) {
             return Redirect::to('/user')->withInput()->withErrors($validator);
         } else {
-            $ins_arr = array('name' => Input::get('name'), 'email' => Input::get('email'), 'mobile' => Input::get('mobile'),
-                'password' => md5(Input::get('password'))
+            $ins_arr = array('name' => Input::get('name'), 'email' => Input::get('email'), 
+                'mobile' => Input::get('mobile'),'password' => md5(Input::get('password'))
             );
             DB::table('user')->insert($ins_arr);
             $user_id = DB::getPdo()->lastInsertId();
@@ -69,11 +70,12 @@ class User extends Controller {
     public function login_validate_form(Request $request) {
         $postData = Input::all();
         $messages = [
-            'email.required' => 'Password is Required',
+            'email.required' => 'Email is Required',
+            'email.email' => 'Invalid Email',
             'password.required' => 'Password is Required',
         ];
         $rules = [
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
         ];
         $validator = Validator::make($postData, $rules, $messages);
@@ -94,7 +96,7 @@ class User extends Controller {
     }
 
     public function my_account() {
-
+        
         if (!Session::has('USER_ID')) {
             Session::flash('message', 'You must login to access this page');
             return Redirect::to('/user/login');
@@ -135,5 +137,8 @@ class User extends Controller {
         Session::forget('USER_ID');
         return Redirect::to('/');
     }
+    
+    
+    
 
 }

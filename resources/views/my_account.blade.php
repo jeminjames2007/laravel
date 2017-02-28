@@ -7,7 +7,7 @@
         
     </head>
     <body>
-        <img src="{{asset('uploads/thumbnail/').'/'.$user->photo}}">
+        <img src="{{asset('uploads/thumbnail/').'/'.$user->photo}}" width="75" height="75">
         <div class="container">
             <div class="content">
                 <span style="text-align: right; float: right;"><a href="<?php echo URL::to('/user/logout');?>">Logout</a></span>

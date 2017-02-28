@@ -13,7 +13,7 @@
                 <span style="color: red;"><?php echo Session::get('message');?></span>
                 <?php }?>
                 <form action="login_validate_form" method="post">
-                    <input name="_token" hidden value="{!! csrf_token() !!}" />
+                    <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
                 <table>
                     
                     
